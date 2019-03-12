@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+	"http://struts.apache.org/dtds/struts-2.1.7.dtd">
+	
+<struts> 
+    <!-- 使用Spring的对象工厂（Spring整合Struts） -->
+    <constant name="struts.objectFactory" value="spring" />
+    
+    <!-- 配置请求后缀名 -->
+    <constant name="struts.action.extension" value="do" />
+    
+    <!-- 配置主题为简单主题 -->
+    <constant name="struts.ui.theme" value="simple" />
+    
+    <!-- 配置struts为开发模式 -->
+    <constant name="struts.devMode" value="true" />
+    
+    <!-- 配置上传文件的最大大小（此处配置为足够大的1000G） -->
+    <constant name="struts.multipart.maxSize" value="1073741824000" />
+    
+    <!-- 允许struts标签访问静态方法 -->
+    <constant name="struts.ognl.allowStaticMethodAccess" value="true" />
+    
+    <!-- boke应用对应的包 -->
+    <package name="boke" namespace="/" extends="struts-default">
+        <default-action-ref name="PageNotFound" />
+       
+        <!-- 定义全局视图 -->
+        <global-results> 
+            <result name="404">404.jsp</result>
+            <result name="error">WEB-INF/page/error.jsp</result>
+            <!-- 将main.do定义为全局视图（注意type属性的值） -->
+            <result type="chain" name="back_to_main">main</result>
+        </global-results>
+
+        <!-- 定义全局异常转发 -->
+        <global-exception-mappings>
+            <!-- NoSuchMethodException异常发生时转到404视图 -->
+            <exception-mapping result="404" exception="java.lang.NoSuchMethodException" />
+            <!-- 其他异常发生时转到error视图 -->
+            <exception-mapping result="error" exception="java.lang.Exception" />
+        </global-exception-mappings>
+        
+        <action name="PageNotFound">
+            <result>404.jsp</result>
+        </action>
+        
+        <action name="main" class="edu.ahpu.boke.action.MainAction">
+            <result name="main">WEB-INF/page/main.jsp</result>
+        </action>
+        
+        <action name="verification_code" class="edu.ahpu.boke.action.VerificationCodeAction">
+            <result name="init">WEB-INF/page/verification_code.jsp</result>
+        </action>
+        
+        <action name="register_*" class="edu.ahpu.boke.action.RegisterAction" method="{1}">
+            <result name="register">WEB-INF/page/register.jsp</result>
+            <result name="register_success">WEB-INF/page/register_success.jsp</result>
+        </action>
+        
+        <action name="login_*" class="edu.ahpu.boke.action.LoginAction" method="{1}">
+            <result name="login">WEB-INF/page/login.jsp</result>
+        </action>
+        
+        <action name="upload_*" class="edu.ahpu.boke.action.UploadAction" method="{1}">
+            <result name="upload">WEB-INF/page/upload.jsp</result>
+            <result name="upload_success">WEB-INF/page/upload_success.jsp</result>
+        </action>
+        
+        <action name="player_*" class="edu.ahpu.boke.action.PlayerAction" method="{1}">
+            <result name="player">WEB-INF/page/player.jsp</result>
+            <result name="player_error">WEB-INF/page/player_error.jsp</result>
+        </action>
+    </package>
+</struts>

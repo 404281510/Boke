@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.dialect">
+            org.hibernate.dialect.MySQL5Dialect
+        </property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.format_sql">true</property>
+        
+
+        <!-- 配置启用二级缓存 -->
+        <property name="hibernate.cache.use_second_level_cache">true</property>
+        
+       
+        <property name="hibernate.cache.provider_class">
+            org.hibernate.cache.EhCacheProvider
+        </property>
+        
+        <!-- 启用查询缓存 -->
+        <property name="hibernate.cache.use_query_cache">true</property>
+        
+        <!-- 映射文件 -->
+        <mapping resource="edu/ahpu/boke/domain/Message.hbm.xml" />
+        <mapping resource="edu/ahpu/boke/domain/Face.hbm.xml" />
+        <mapping resource="edu/ahpu/boke/domain/User.hbm.xml" />
+        <mapping resource="edu/ahpu/boke/domain/Channel.hbm.xml" />
+        <mapping resource="edu/ahpu/boke/domain/Fan.hbm.xml" />
+        <mapping resource="edu/ahpu/boke/domain/Comment.hbm.xml" />
+        <mapping resource="edu/ahpu/boke/domain/Video.hbm.xml" />
+        <mapping resource="edu/ahpu/boke/domain/Config.hbm.xml" />
+        
+        <!-- 配置类级别的二级缓存 -->
+        <class-cache class="edu.ahpu.boke.domain.Channel" usage="read-write" />
+        <class-cache class="edu.ahpu.boke.domain.Face" usage="read-write" />
+        <class-cache class="edu.ahpu.boke.domain.Config" usage="read-write" />
+    </session-factory>
+</hibernate-configuration>
